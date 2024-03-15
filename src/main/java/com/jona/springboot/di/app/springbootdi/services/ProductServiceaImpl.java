@@ -3,7 +3,7 @@ package com.jona.springboot.di.app.springbootdi.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.jona.springboot.di.app.springbootdi.models.Product;
@@ -25,7 +25,7 @@ public class ProductServiceaImpl implements ProductService{
 
     // Inyeccion de dependencia mediante constructor.
     // No es necesario usar la anotación @Autowired
-    public ProductServiceaImpl(ProductRepository repository) {
+    public ProductServiceaImpl(@Qualifier("productFoo") ProductRepository repository) {
         this.repository = repository;
     }
 
