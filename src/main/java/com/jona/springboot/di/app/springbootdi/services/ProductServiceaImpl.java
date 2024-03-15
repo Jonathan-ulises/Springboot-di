@@ -28,7 +28,7 @@ public class ProductServiceaImpl implements ProductService{
 
     // Inyeccion de dependencia mediante constructor.
     // No es necesario usar la anotación @Autowired
-    public ProductServiceaImpl(@Qualifier("productList") ProductRepository repository) {
+    public ProductServiceaImpl(@Qualifier("productJson") ProductRepository repository) {
         this.repository = repository;
     }
 
