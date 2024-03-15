@@ -25,7 +25,7 @@ public class ProductServiceaImpl implements ProductService{
 
     // Inyeccion de dependencia mediante constructor.
     // No es necesario usar la anotación @Autowired
-    public ProductServiceaImpl(@Qualifier("productFoo") ProductRepository repository) {
+    public ProductServiceaImpl(@Qualifier("productList") ProductRepository repository) {
         this.repository = repository;
     }
 
@@ -35,9 +35,11 @@ public class ProductServiceaImpl implements ProductService{
         return repository.findAll().stream().map(p -> {
             Double priceTax = p.getPrice() * 1.25d;
             // Product newProd = new Product(p.getId(), p.getName(), priceTax.longValue());
-            Product newProd = (Product) p.clone();
-            newProd.setPrice(priceTax.longValue());
-            return newProd;
+            // Product newProd = (Product) p.clone();
+            // newProd.setPrice(priceTax.longValue());
+            p.setPrice(priceTax.longValue());
+            return p;
+            // return newProd;
         }).collect(Collectors.toList());
     }
 
