@@ -12,8 +12,23 @@ import com.jona.springboot.di.app.springbootdi.repositories.ProductRepository;
 @Service
 public class ProductServiceaImpl implements ProductService{
 
-    @Autowired
+    
+    // Inyeccion de dependencia mediante atributo.
+    // @Autowired
     private ProductRepository repository;
+
+    // Inyeccion de dependencia mediante setter.
+    // @Autowired
+    public void setRepository(ProductRepository repository) {
+        this.repository = repository;
+    }
+
+    // Inyeccion de dependencia mediante constructor.
+    // No es necesario usar la anotación @Autowired
+    public ProductServiceaImpl(ProductRepository repository) {
+        this.repository = repository;
+    }
+
 
     @Override
     public List<Product> findAll() {
@@ -30,4 +45,5 @@ public class ProductServiceaImpl implements ProductService{
     public Product findById(Long id) {
         return repository.findById(id);
     }
+
 }
