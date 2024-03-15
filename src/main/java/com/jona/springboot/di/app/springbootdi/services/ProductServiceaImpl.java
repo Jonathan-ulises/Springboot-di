@@ -3,7 +3,10 @@ package com.jona.springboot.di.app.springbootdi.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.jona.springboot.di.app.springbootdi.models.Product;
@@ -30,19 +33,22 @@ public class ProductServiceaImpl implements ProductService{
     }
 
 
+    @Autowired
+    private Environment environment;
+
     @Override
     public List<Product> findAll() {
         return repository.findAll().stream().map(p -> {
-            Double priceTax = p.getPrice() * 1.25d;
+            Double priceTax = p.getPrice() * environment.getProperty("config.price.tax", Double.class);
             // Product newProd = new Product(p.getId(), p.getName(), priceTax.longValue());
             
-            // Product newProd = (Product) p.clone();
-            // newProd.setPrice(priceTax.longValue());
-            // return newProd;
+            Product newProd = (Product) p.clone();
+            newProd.setPrice(priceTax.longValue());
+            return newProd;
 
-            p.setPrice(priceTax.longValue());
-            return p;
-            
+            // p.setPrice(priceTax.longValue());
+            // return p;
+
         }).collect(Collectors.toList());
     }
 
